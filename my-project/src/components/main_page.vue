@@ -18,16 +18,17 @@
 
     <div class="events">
       <div 
-        v-for="room in sobe" 
+        v-for="room in filteredAndSortedRooms" 
         :key="room._id" 
         class="event-card" 
         @click="goToRoom(room._id)"
       >
-        <h2>{{ room.name.toUpperCase() }}</h2>
+        <h2>{{ room.title.toUpperCase() }}</h2>
         <p><b>Žanr:</b> {{ room.genre }}</p>
         <p><b>Težina:</b> {{ room.difficulty }}</p>
       </div>
     </div>
+
     <div class="account-link">
       <router-link to="/account">
         <div class="circle"></div>
@@ -37,17 +38,19 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
+import { ref, computed, onMounted } from "vue";
+import { useRouter } from "vue-router";
 
 export default {
   setup() {
-    const sobe = ref([]); 
+    const sobe = ref([]);
     const router = useRouter();
+    const selectedGenre = ref("");
+    const sortOrder = ref("asc");
 
     const fetchRooms = async () => {
       try {
-        const response = await fetch("http://localhost:3000/escape_room");
+        const response = await fetch("http://localhost:3000/escape_room"); 
         if (!response.ok) {
           throw new Error("Nije uspjelo dohvaćanje stranice");
         }
@@ -62,11 +65,32 @@ export default {
       router.push(`/rooms/${id}`);
     };
 
-    onMounted(fetchRooms); 
+    const uniqueGenres = computed(() => {
+      const genres = new Set(sobe.value.map((room) => room.genre));
+      return Array.from(genres);
+    });
+
+    const filteredAndSortedRooms = computed(() => {
+      let filteredRooms = sobe.value;
+
+      if (selectedGenre.value) {
+        filteredRooms = filteredRooms.filter(room => room.genre === selectedGenre.value);
+      }
+
+      return filteredRooms.sort((a, b) => 
+        sortOrder.value === "asc" ? a.difficulty - b.difficulty : b.difficulty - a.difficulty
+      );
+    });
+
+    onMounted(fetchRooms);
 
     return {
-      goToRoom,
       sobe,
+      goToRoom,
+      selectedGenre,
+      sortOrder,
+      uniqueGenres,
+      filteredAndSortedRooms, 
     };
   },
 };

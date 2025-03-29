@@ -27,6 +27,11 @@ const routes = [
       name: 'leaderboard',
       component: () => import('./components/leaderboard.vue'),
     },
+    {
+      path: `/room/${id}`,
+      name: 'room_id',
+      component: () => import('./components/start_page.vue'),
+    },
 ];
 
 const router = createRouter({

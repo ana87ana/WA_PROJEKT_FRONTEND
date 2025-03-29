@@ -1,104 +1,90 @@
 <template>
-    <div>
-      <h1>E-scape room</h1>
-      <form @submit.prevent="register">
-        <div>
-          <label for="username"><b>USERNAME:</b></label>
-          <input type="text" v-model="username" required />
-        </div>
-        <div>
-          <label for="email"><b>EMAIL:</b></label>
-          <input type="email" v-model="email" required />
-        </div>
-        <div>
-          <label for="password"><b>PASSWORD:</b></label>
-          <input type="password" v-model="password" required />
-        </div>
-        <button type="submit"><b>CREATE</b></button>
-      </form>
-    </div>
-  </template>
-  
-  <script>
-  import korisnici from '../podatci.js'; 
-  import { ref } from 'vue';
-  import { useRouter } from 'vue-router';
-  
-  export default {
-    setup() {
-      const username = ref('');
-      const email = ref('');
-      const password = ref('');
-      const router = useRouter();
-  
-      const register = () => {
-        const existingUser = korisnici.find((user) => user.email === email.value);
-  
-        if (existingUser) {
-          alert('Email already registered!');
-          return;
+  <div class="login-container">
+    <h1>Sign Up</h1>
+    <form @submit.prevent="registerUser">
+      <input v-model="email" type="email" placeholder="Email" required />
+      <input v-model="username" type="text" placeholder="Username" required />
+      <input v-model="password" type="password" placeholder="Password" required />
+      <input v-model="confirmPassword" type="password" placeholder="Confirm Password" required />
+      <button type="submit">Register</button>
+      <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
+    </form>
+  </div>
+</template>
+
+<script>
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+
+export default {
+  setup() {
+    const email = ref('');
+    const username = ref('');
+    const password = ref('');
+    const confirmPassword = ref('');
+    const errorMessage = ref('');
+    const router = useRouter();
+
+    const registerUser = async () => {
+      if (password.value !== confirmPassword.value) {
+        errorMessage.value = "Passwords do not match";
+        return;
+      }
+      try {
+        const response = await fetch("http://localhost:3000/register", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email: email.value,
+            username: username.value,
+            password: password.value,
+            confirmPassword: confirmPassword.value
+          }),
+        });
+
+        if (!response.ok) {
+          throw new Error(await response.text());
         }
-  
-        const newUser = {
-          id: Date.now(), 
-          username: username.value,
-          email: email.value,
-          password: password.value,
-          isAdmin: false, 
-        };
-  
-        korisnici.push(newUser); 
-        alert('User registered successfully!');
-  
-        router.push('/account');
-      };
-  
-      return {
-        username,
-        email,
-        password,
-        register,
-      };
-    },
-  };
-  </script>
-  
-  <style>
-  h1 {
-    color: #4e8199;
-    font-size: 60px;
-  }
-  
-  label {
-    display: block;
-    color: #01233a;
-    margin-bottom: 10px;
-    margin-top: 10px;
-  }
-  
-  input[type="text"],
-  input[type="password"],
-  input[type="email"] {
-    width: 500px;
-    padding: 8px;
-    background-color: #72c2e4;
-    border: 1px solid #72c2e4;
-    border-radius: 3px;
-  }
-  
-  button {
-    width: 100px;
-    padding: 10px;
-    margin: 10px;
-    background-color: #4e8199;
-    color: #f4c8ca;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: #01233a;
-  }
-  </style>
-  
+
+        alert("User successfully registered!");
+        router.push("/main_page");
+      } catch (error) {
+        errorMessage.value = error.message;
+      }
+    };
+
+    return { email, username, password, confirmPassword, registerUser, errorMessage };
+  },
+};
+</script>
+
+<style scoped>
+.login-container {
+  max-width: 400px;
+  margin: auto;
+  padding: 20px;
+  text-align: center;
+  background: #f4f4f4;
+  border-radius: 8px;
+}
+input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+button {
+  width: 100%;
+  padding: 10px;
+  background: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+.error {
+  color: red;
+  margin-top: 10px;
+}
+</style>
