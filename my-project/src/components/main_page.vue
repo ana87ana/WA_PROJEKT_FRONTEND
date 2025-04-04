@@ -62,7 +62,7 @@ export default {
     };
 
     const goToRoom = (id) => {
-      router.push(`/rooms/${id}`);
+      router.push(`/room/${id}`);
     };
 
     const uniqueGenres = computed(() => {
@@ -100,29 +100,43 @@ export default {
 .event-list {
   padding: 20px;
   text-align: center;
+  margin-top: -10px; /* move the title a bit higher */
 }
 
 .events {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
+  grid-template-columns: repeat(3, 1fr); /* 3 per row */
+  gap: 30px;
   justify-items: center;
+  margin-top: 30px;
 }
 
 .event-card {
   background-color: #4e8199;
   color: #01233a;
-  border-radius: 8px;
-  padding: 20px;
-  width: 100px;
-  height: 100px;
+  border-radius: 12px;
+  padding: 25px;
+  width: 220px;
+  height: 180px;
   display: flex;
+  flex-direction: column; /* Stack elements vertically */
   align-items: center;
   justify-content: center;
   font-weight: bold;
   text-align: center;
   cursor: pointer;
   transition: transform 0.2s;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.event-card h2 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.event-card p {
+  margin: 6px 0;
+  font-size: 14px;
 }
 
 .event-card:hover {
@@ -139,4 +153,5 @@ export default {
   border-radius: 50%;
   cursor: pointer;
 }
+
 </style>

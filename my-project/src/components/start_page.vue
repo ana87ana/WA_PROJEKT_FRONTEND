@@ -1,13 +1,19 @@
 <template>
   <div class="start-page">
-    <h1>{{ escapeRoom.title }}</h1>
-    <p><b>Žanr:</b> {{ escapeRoom.genre }}</p>
-    <p><b>Težina:</b> {{ escapeRoom.difficulty }}</p>
-    <p>{{ escapeRoom.description }}</p>
-    <button @click="startEscapeRoom">Započni</button>
-    <button @click="goToLeaderboard">Pogledaj Leaderboard</button>
+    <div class="card">
+      <h1 class="title">{{ escapeRoom?.title?.toUpperCase() }}</h1>
+      <p><b>Žanr:</b> {{ escapeRoom?.genre || 'N/A' }}</p>
+      <p><b>Težina:</b> {{ escapeRoom?.difficulty || 'N/A' }}</p>
+      <p class="description">{{ escapeRoom?.description || 'Opis nije dostupan.' }}</p>
+
+      <div class="buttons">
+        <button @click="startEscapeRoom">Započni</button>
+        <button @click="goToLeaderboard">Pogledaj Leaderboard</button>
+      </div>
+    </div>
   </div>
 </template>
+
 
 <script>
 import { ref, onMounted } from 'vue';
@@ -53,18 +59,57 @@ export default {
 
 <style scoped>
 .start-page {
-  text-align: center;
-  padding: 20px;
+  display: flex;
+  justify-content: center;
+  padding: 40px 20px;
 }
+
+.card {
+  background-color: #72c2e4;
+  padding: 30px;
+  border-radius: 12px;
+  max-width: 600px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.title {
+  font-size: 36px;
+  margin-bottom: 20px;
+  color: #01233a;
+}
+
+.description {
+  margin: 20px 0;
+  font-size: 16px;
+  line-height: 1.4;
+  color: #01233a;
+}
+
+.buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
 button {
-  padding: 10px 20px;
+  padding: 12px 28px;
   background-color: #4e8199;
   color: white;
   border: none;
+  border-radius: 8px;
   cursor: pointer;
   font-size: 16px;
+  max-width: 200px;
+  width: 100%;
+  word-wrap: break-word;
+  text-align: center;
 }
+
 button:hover {
   background-color: #3a687b;
 }
+
 </style>

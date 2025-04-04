@@ -28,9 +28,19 @@ const routes = [
       component: () => import('./components/leaderboard.vue'),
     },
     {
-      path: `/room/${id}`,
+      path: '/room/:id',
       name: 'room_id',
       component: () => import('./components/start_page.vue'),
+    },
+    {
+      path: '/subroom/:id/:type',
+      name: 'subroom',
+      component: () => import('./components/room_types.vue'),
+    },
+    {
+      path: '/leaderboard/:id',
+      name: 'leaderboard_id',
+      component: () => import('./components/leaderboard.vue'),
     },
 ];
 

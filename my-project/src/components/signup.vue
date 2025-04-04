@@ -1,12 +1,12 @@
 <template>
-  <div class="login-container">
+  <div class="signup-container">
     <h1>Sign Up</h1>
     <form @submit.prevent="registerUser">
       <input v-model="email" type="email" placeholder="Email" required />
       <input v-model="username" type="text" placeholder="Username" required />
       <input v-model="password" type="password" placeholder="Password" required />
       <input v-model="confirmPassword" type="password" placeholder="Confirm Password" required />
-      <button type="submit">Register</button>
+      <button type="submit">REGISTER</button>
       <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
     </form>
   </div>
@@ -59,29 +59,42 @@ export default {
 </script>
 
 <style scoped>
-.login-container {
-  max-width: 400px;
+.signup-container {
+  max-width: 500px;
   margin: auto;
   padding: 20px;
   text-align: center;
-  background: #f4f4f4;
   border-radius: 8px;
 }
+input::placeholder {
+  color: #073a5e;
+  font-size: 16px;
+  opacity: 1; 
+}
 input {
-  width: 100%;
+  width: 90%;
   padding: 10px;
   margin: 10px 0;
   border: 1px solid #ccc;
   border-radius: 5px;
+  background-color: #72c2e4;
+  color: #073a5e;
+
 }
 button {
-  width: 100%;
+  width: 100px;
+  align-content: left;
   padding: 10px;
-  background: #4CAF50;
-  color: white;
+  margin: 10px;
+  background-color: #01233a;
+  color: #72c2e4;
   border: none;
+  border-radius: 3px;
   cursor: pointer;
-  border-radius: 5px;
+}
+
+button:hover {
+  background-color: #01212c;
 }
 .error {
   color: red;
