@@ -47,6 +47,7 @@ export default {
 
         const data = await response.json();
         localStorage.setItem('jwt_token', data.jwt_token); 
+        console.log('Login response:', response)
 
         console.log('User logged in');
         router.push('/main_page'); 

@@ -1,14 +1,14 @@
 <template>
   <div class="event-detail">
     <div class="event-card">
-      <h1>{{ escapeRoomName.toUpperCase() }}</h1>
+      <h1 v-if="escapeRoomName">{{ escapeRoomName.toUpperCase() }}</h1>
     </div>
 
     <div class="user-list">
       <div v-for="(user, index) in sortedLeaderboard" :key="index" class="user-item">
         <span class="user-number">{{ index + 1 }}. </span>
         <span class="username">{{ user.username }}</span>
-        <span class="time">{{ formatTime(user.time) }}</span>
+        <span class="time">{{ formatTime(user.firstTime) }}</span>
       </div>
     </div>
 
@@ -37,22 +37,22 @@ export default {
           throw new Error('Neuspjelo dohvaćanje podataka sobe');
         }
         const data = await response.json();
-        escapeRoomName.value = data.title; // Get the escape room title
-        leaderboard.value = data.leaderboard || []; // Get leaderboard from the room data
+        escapeRoomName.value = data.roomName; 
+        leaderboard.value = data.leaderboard || []; 
       } catch (error) {
         console.error('Greška pri dohvaćanju leaderborda:', error);
       }
     };
 
-    const formatTime = (milliseconds) => {
-      const minutes = Math.floor(milliseconds / 60000);
-      const seconds = ((milliseconds % 60000) / 1000).toFixed(0);
-      return `${minutes}:${seconds.padStart(2, '0')}`;
-    };
+    const formatTime = (seconds) => {
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = (seconds % 60).toFixed(0);
+  return `${minutes}:${remainingSeconds.padStart(2, '0')}`;
+};
 
     const sortedLeaderboard = computed(() => {
-      return [...leaderboard.value].sort((a, b) => a.time - b.time); // Sorting by time (fastest first)
-    });
+  return [...leaderboard.value].sort((a, b) => a.firstTime - b.firstTime); 
+});
 
     onMounted(fetchLeaderboard);
     return { escapeRoomName, sortedLeaderboard, formatTime };
@@ -70,47 +70,55 @@ export default {
 
 .event-card {
   background-color: #72c2e4;
-  width: 250%;
+  width: 100%;
+  max-width: 600px;
   padding: 20px;
   text-align: center;
-  border-radius: 8px;
-  margin-bottom: 20px;
+  border-radius: 12px;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .event-card h1 {
   font-size: 32px;
   color: #01233a;
+  margin: 0;
 }
 
 .user-list {
-  width: 250%;
+  width: 100%;
+  max-width: 600px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 
 .user-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #72c2e4;
-  padding: 10px;
-  border-radius: 8px;
-  font-size: 16px;
+  background-color: #e0f3fa;
+  padding: 12px 18px;
+  border-radius: 10px;
+  font-size: 18px;
   color: #01233a;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .user-number {
   font-weight: bold;
+  margin-right: 10px;
 }
 
 .username {
   flex-grow: 1;
   text-align: left;
+  min-width: 150px; 
 }
 
 .time {
   text-align: right;
+  font-weight: bold;
 }
 
 .account-link {
@@ -127,3 +135,4 @@ export default {
   cursor: pointer;
 }
 </style>
+

@@ -100,12 +100,12 @@ export default {
 .event-list {
   padding: 20px;
   text-align: center;
-  margin-top: -10px; /* move the title a bit higher */
+  margin-top: -10px; 
 }
 
 .events {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 3 per row */
+  grid-template-columns: repeat(3, 1fr); 
   gap: 30px;
   justify-items: center;
   margin-top: 30px;
@@ -119,7 +119,7 @@ export default {
   width: 220px;
   height: 180px;
   display: flex;
-  flex-direction: column; /* Stack elements vertically */
+  flex-direction: column; 
   align-items: center;
   justify-content: center;
   font-weight: bold;

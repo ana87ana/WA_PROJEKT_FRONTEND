@@ -1,6 +1,6 @@
 <template>
   <div class="signup-container">
-    <h1>Sign Up</h1>
+    <h1>SIGN UP</h1>
     <form @submit.prevent="registerUser">
       <input v-model="email" type="email" placeholder="Email" required />
       <input v-model="username" type="text" placeholder="Username" required />

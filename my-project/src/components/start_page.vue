@@ -14,16 +14,17 @@
   </div>
 </template>
 
-
 <script>
 import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import { useTimerStore } from '../stores/timer.js';
 
 export default {
   setup() {
     const route = useRoute();
     const router = useRouter();
     const escapeRoom = ref({});
+    const timer = useTimerStore();
 
     const fetchEscapeRoom = async () => {
       try {
@@ -40,6 +41,7 @@ export default {
     const startEscapeRoom = () => {
       if (escapeRoom.value.subrooms && escapeRoom.value.subrooms.length > 0) {
         const firstSubroom = escapeRoom.value.subrooms[0];
+        timer.startTimer();
         router.push({
           path: `/subroom/${route.params.id}/${firstSubroom.type}`,
           query: { index: 0 }
