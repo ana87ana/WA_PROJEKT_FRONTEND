@@ -46,7 +46,7 @@ const fetchUserData = async () => {
       return;
     }
 
-    const res = await fetch('http://localhost:3000/user/account', {
+    const res = await fetch('https://wa-projekt-backend-xm06.onrender.com/user/account', {
       headers: {
         Authorization: `Bearer ${token}`
       }
@@ -76,7 +76,7 @@ onMounted(async () => {
 
     const token = localStorage.getItem('jwt_token'); // make sure this matches the key you use in login
 
-    const res = await fetch(`http://localhost:3000/escape_room/${escapeRoomId}/complete`, {
+    const res = await fetch(`https://wa-projekt-backend-xm06.onrender.com/escape_room/${escapeRoomId}/complete`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

@@ -28,7 +28,7 @@ export default {
 
     const fetchEscapeRoom = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/escape_room/${route.params.id}`);
+        const response = await fetch(`https://wa-projekt-backend-xm06.onrender.com/escape_room/${route.params.id}`);
         if (!response.ok) {
           throw new Error("Neuspjelo dohvaćanje sobe");
         }

@@ -44,7 +44,7 @@ export default {
 
     const fetchQuestion = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/escape_room/${escapeRoomId}`);
+        const response = await fetch(`https://wa-projekt-backend-xm06.onrender.com/escape_room/${escapeRoomId}`);
         const data = await response.json();
 
         const subroom = data.subrooms[subroomIndex];
@@ -67,7 +67,7 @@ export default {
     };
 
     const nextSubroom = async () => {
-      const response = await fetch(`http://localhost:3000/escape_room/${escapeRoomId}`);
+      const response = await fetch(`https://wa-projekt-backend-xm06.onrender.com/escape_room/${escapeRoomId}`);
       const data = await response.json();
 
       if (subroomIndex + 1 < data.subrooms.length) {

@@ -50,7 +50,7 @@ export default {
 
     const fetchRooms = async () => {
       try {
-        const response = await fetch("http://localhost:3000/escape_room"); 
+        const response = await fetch("https://wa-projekt-backend-xm06.onrender.com/escape_room"); 
         if (!response.ok) {
           throw new Error("Nije uspjelo dohvaćanje stranice");
         }

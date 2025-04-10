@@ -101,7 +101,7 @@ const fetchUsers = async () => {
       return;
     }
     
-    const response = await fetch('http://localhost:3000/admin/users', {
+    const response = await fetch('https://wa-projekt-backend-xm06.onrender.com/admin/users', {
       headers: {
         Authorization: `Bearer ${token}`
       }

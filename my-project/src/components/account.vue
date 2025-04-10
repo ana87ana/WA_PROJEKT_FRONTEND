@@ -57,7 +57,7 @@ export default {
       console.error("Error parsing token:", err);
     }
 
-        const response = await fetch("http://localhost:3000/user/account", {
+        const response = await fetch("https://wa-projekt-backend-xm06.onrender.com/user/account", {
           headers: { Authorization: `Bearer ${token}` },
         });
 

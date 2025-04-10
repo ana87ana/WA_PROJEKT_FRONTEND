@@ -34,7 +34,7 @@ export default {
 
     const submitForm = async () => {
       try {
-        const response = await fetch('http://localhost:3000/login', {
+        const response = await fetch('https://wa-projekt-backend-xm06.onrender.com/login', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ username: username.value, password: password.value }),
